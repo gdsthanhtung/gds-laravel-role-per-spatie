@@ -4,17 +4,14 @@ namespace App\Http\Controllers\Admin;
 
 use App\Http\Controllers\Controller;
 use Illuminate\Http\Request;
-use App\Models\Permission as MainModel;
-
-use Illuminate\Support\Str;
 use Spatie\Permission\Models\Permission;
-
+use Illuminate\Support\Str;
 
 class PermissionController extends Controller
 {
     public function index()
     {
-        $permissions = MainModel::all();
+        $permissions = Permission::all();
         return view('admin.permissions.index', compact('permissions'));
     }
 
@@ -36,13 +33,13 @@ class PermissionController extends Controller
 
     public function show($id)
     {
-        $permission = MainModel::findOrFail($id);
+        $permission = Permission::findOrFail($id);
         return view('admin.permissions.show', compact('permission'));
     }
 
     public function edit($id)
     {
-        $permission = MainModel::findOrFail($id);
+        $permission = Permission::findOrFail($id);
         return view('admin.permissions.edit', compact('permission'));
     }
 
@@ -52,15 +49,15 @@ class PermissionController extends Controller
             'name' => 'required|unique:permissions,name,' . $id . '|max:255',
         ]);
 
-        $permission = MainModel::findOrFail($id);
-        $permission->update($request->all());
+        $permission = Permission::findOrFail($id);
+        $permission->update(['name' => Str::lower($request->name)]);
 
         return redirect()->route('permissions.index')->with('success', 'Permission updated successfully.');
     }
 
     public function destroy($id)
     {
-        $permission = MainModel::findOrFail($id);
+        $permission = Permission::findOrFail($id);
         $permission->delete();
 
         return redirect()->route('permissions.index')->with('success', 'Permission deleted successfully.');

@@ -10,7 +10,7 @@
             <label for="name">Name</label>
             <input type="text" class="form-control" id="name" name="name" value="{{ $permission->name }}" required>
         </div>
-        <button type="submit" class="btn btn-primary">Update</button>
+        <button type="submit" class="btn btn-primary mt-2">Update</button>
     </form>
 </div>
 @endsection

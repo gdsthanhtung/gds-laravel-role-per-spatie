@@ -9,7 +9,7 @@
             <label for="name">Name</label>
             <input type="text" class="form-control" id="name" name="name" required>
         </div>
-        <button type="submit" class="btn btn-primary">Create</button>
+        <button type="submit" class="btn btn-primary mt-2">Create</button>
     </form>
 </div>
 @endsection

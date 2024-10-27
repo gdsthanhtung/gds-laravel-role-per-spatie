@@ -9,6 +9,11 @@ use Illuminate\Support\Str;
 
 class PermissionController extends Controller
 {
+    public function __construct()
+    {
+        //$this->middleware('check.permissions:permissions');
+    }
+
     public function index()
     {
         $permissions = Permission::all();

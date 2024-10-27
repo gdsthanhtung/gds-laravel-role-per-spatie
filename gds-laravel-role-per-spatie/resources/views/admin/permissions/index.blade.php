@@ -3,7 +3,11 @@
 @section('content')
 <div class="container">
     <h1>Permissions</h1>
-    <a href="{{ route('permissions.create') }}" class="btn btn-primary">Create Permission</a>
+    @can('create permissions')
+        <a href="{{ route('permissions.create') }}" class="btn btn-primary">Create Permission</a>
+    @else
+        <button class="btn btn-primary" disabled>Create Permission</button>
+    @endcan
     <table class="table">
         <thead>
             <tr>
@@ -18,12 +22,19 @@
                     <td>{{ $permission->id }}</td>
                     <td>{{ $permission->name }}</td>
                     <td>
-                        <a href="{{ route('permissions.edit', $permission->id) }}" class="btn btn-warning">Edit</a>
-                        <form action="{{ route('permissions.destroy', $permission->id) }}" method="POST" style="display:inline;">
-                            @csrf
-                            @method('DELETE')
-                            <button type="submit" class="btn btn-danger">Delete</button>
-                        </form>
+                        @can('view permissions')
+                            <a href="{{ route('permissions.show', $permission->id) }}" class="btn btn-info">View</a>
+                        @endcan
+                        @can('edit permissions')
+                            <a href="{{ route('permissions.edit', $permission->id) }}" class="btn btn-warning">Edit</a>
+                        @endcan
+                        @can('delete permissions')
+                            <form action="{{ route('permissions.destroy', $permission->id) }}" method="POST" style="display:inline;">
+                                @csrf
+                                @method('DELETE')
+                                <button type="submit" class="btn btn-danger">Delete</button>
+                            </form>
+                        @endcan
                     </td>
                 </tr>
             @endforeach

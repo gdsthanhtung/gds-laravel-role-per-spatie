@@ -2,6 +2,8 @@
 
 use App\Http\Controllers\Admin\PermissionController;
 use App\Http\Controllers\Admin\RoleController;
+use App\Http\Controllers\Admin\UserController;
+use App\Http\Controllers\HomeController;
 use Illuminate\Support\Facades\Route;
 
 /*
@@ -21,10 +23,13 @@ Route::get('/', function () {
 
 Auth::routes();
 
-Route::get('/home', [App\Http\Controllers\HomeController::class, 'index'])->name('home');
+Route::get('/home', [HomeController::class, 'index'])->name('home');
 
-Route::prefix('admin')->group(function () {
-    Route::resource('users', App\Http\Controllers\Admin\UserController::class);
+Route::middleware(['auth'])->prefix('admin')->group(function () {
+    Route::get('users/custom', [UserController::class, 'custom_function'])->name('users.custom');
+
+    Route::resource('users', UserController::class);
     Route::resource('roles', RoleController::class);
     Route::resource('permissions', PermissionController::class);
+
 });
